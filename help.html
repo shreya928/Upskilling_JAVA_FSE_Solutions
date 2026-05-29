@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!-- Exercise HTML2: External page opened with target="_blank" -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Help & Support — CityConnect Portal</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Exercise CSS1: Internal embedded style */
+    body {
+      background-color: #f0ece4;
+    }
+    .help-container {
+      max-width: 800px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(26,60,94,0.1);
+    }
+    /* Exercise CSS1: Inline red heading example (see h1 below) */
+    .help-intro {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #444;
+    }
+    .help-section {
+      margin-top: 2rem;
+    }
+    .help-section h3 {
+      color: #1a3c5e;
+      border-bottom: 2px solid #c8dde8;
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    /* Exercise CSS6: Styled list */
+    .help-list {
+      list-style-type: disc;
+      list-style-position: inside;
+      padding-left: 1rem;
+    }
+    .help-list li {
+      padding: 0.3rem 0;
+      margin-bottom: 0.3rem;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      color: #2e7d9e;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <nav id="mainNav">
+    <div class="nav-brand">🏛️ CityConnect</div>
+    <ul>
+      <li><a href="index.html">← Back to Portal</a></li>
+    </ul>
+  </nav>
+
+  <div class="help-container">
+    <!-- Exercise CSS1: Inline style on heading (red) -->
+    <h1 style="color: red;">Help &amp; Support</h1>
+    <p class="help-intro">
+      Welcome to the CityConnect Community Portal Help Centre.
+      Find answers to common questions and guidance on using the portal.
+    </p>
+
+    <div class="help-section">
+      <h3>📋 How to Register for an Event</h3>
+      <ol class="help-list">
+        <li>Go to the <strong>Register</strong> section on the main page.</li>
+        <li>Fill in your name, email, preferred date, and event type.</li>
+        <li>Optionally enter your phone number and a message.</li>
+        <li>Click <strong>Register Now</strong> to submit your registration.</li>
+        <li>A confirmation message will appear on screen.</li>
+      </ol>
+    </div>
+
+    <div class="help-section">
+      <h3>🔍 How to Filter Events</h3>
+      <ul class="help-list">
+        <li>Use the <strong>Filter by Category</strong> dropdown to narrow events.</li>
+        <li>Type in the search box to find events by name.</li>
+      </ul>
+    </div>
+
+    <div class="help-section">
+      <h3>📍 Geolocation</h3>
+      <ul class="help-list">
+        <li>Click <strong>Find Nearby Events</strong> to share your location.</li>
+        <li>Your browser will ask for permission — please allow it.</li>
+        <li>Your coordinates will be displayed to find nearest events.</li>
+      </ul>
+    </div>
+
+    <div class="help-section">
+      <h3>💾 Saved Preferences</h3>
+      <ul class="help-list">
+        <li>Your preferred event type is saved automatically using <code>localStorage</code>.</li>
+        <li>It will be pre-selected next time you visit.</li>
+        <li>Click <strong>Clear Preferences</strong> to reset all saved data.</li>
+      </ul>
+    </div>
+
+    <div class="help-section">
+      <h3>📞 Contact Support</h3>
+      <p>Email us at <a href="mailto:support@cityconnect.in">support@cityconnect.in</a></p>
+    </div>
+
+    <a href="index.html" class="back-link">← Return to Portal</a>
+  </div>
+
+</body>
+</html>

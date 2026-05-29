@@ -1,0 +1,687 @@
+/* =============================================================
+   styles.css — Local Community Event Portal
+   CSS3 Exercises: All 11 tasks covered
+   ============================================================= */
+
+/* ============================================================
+   Exercise CSS1: External Stylesheet (this file itself)
+   Exercise CSS2: CSS Syntax with comments and indentation
+   ============================================================ */
+
+/* --- Exercise CSS3: Universal selector — reset margin/padding --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- Exercise CSS5: Google Font + Typography base --- */
+body {
+  /* Exercise CSS1: Body background via embedded/external style */
+  /* Exercise CSS4: Background image with fallback color */
+  background-color: #f0ece4;
+  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 16px;
+  color: #2d2d2d;
+  line-height: 1.7;
+}
+
+/* =============================================================
+   Exercise CSS3: Element selector — all h2
+   ============================================================= */
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #1a3c5e;
+  margin-bottom: 1.2rem;
+  /* Exercise CSS4: Gradient on section headers */
+  background: linear-gradient(135deg, #1a3c5e 0%, #2e7d9e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Exercise CSS3: Grouping selector h3 and p */
+h3, p {
+  margin-bottom: 0.8rem;
+}
+
+h3 {
+  font-family: 'Playfair Display', serif;
+  color: #1a3c5e;
+  font-size: 1.2rem;
+}
+
+/* =============================================================
+   NAVIGATION — Exercise CSS6: Link styling with pseudo-classes
+   ============================================================= */
+
+/* --- Style for navigation bar --- */
+#mainNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #1a3c5e, #2e7d9e);
+  padding: 0.8rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: #f0e6c8;
+  letter-spacing: 1px;
+}
+
+/* Exercise CSS3: Element selector for nav ul */
+#mainNav ul {
+  display: flex;
+  gap: 1.5rem;
+  /* Exercise CSS6: Remove bullets from nav */
+  list-style-type: none;
+}
+
+/* Exercise CSS6: list-style and padding for li */
+#mainNav ul li {
+  padding: 0.2rem 0;
+}
+
+/* Exercise CSS6: :link pseudo-class */
+#mainNav ul li a:link {
+  color: #d0eaf5;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  /* Exercise CSS5: letter-spacing */
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+/* Exercise CSS6: :visited pseudo-class */
+#mainNav ul li a:visited {
+  color: #a8d5e8;
+}
+
+/* Exercise CSS6: :hover pseudo-class */
+#mainNav ul li a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* Exercise CSS6: :active pseudo-class */
+#mainNav ul li a:active {
+  color: #f0e6c8;
+}
+
+/* =============================================================
+   HOME / WELCOME — Exercise CSS3: ID selector
+   ============================================================= */
+
+/* Exercise HTML3 + CSS3: ID selector #welcomeBanner — blue background */
+#welcomeBanner {
+  background: linear-gradient(135deg, #1a3c5e 0%, #2e7d9e 60%, #4eb5d0 100%);
+  color: white;
+  padding: 5rem 2rem;
+  text-align: center;
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+}
+
+#welcomeBanner h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+}
+
+#welcomeBanner p {
+  font-size: 1.15rem;
+  max-width: 650px;
+  margin: 0 auto 1.5rem;
+  opacity: 0.9;
+}
+
+/* Exercise CSS3: Class selector .highlight */
+.highlight {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  padding: 0 6px;
+  color: #f0e6c8;
+}
+
+/* =============================================================
+   Exercise CSS2: Style for main CTA button
+   ============================================================= */
+.cta-button {
+  background-color: #e05e2b;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.3s, transform 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.cta-button:hover {
+  background-color: #c44e21;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #1a3c5e;
+  border: 2px solid #1a3c5e;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.95rem;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: 'Source Sans 3', sans-serif;
+  margin-left: 1rem;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  background: #1a3c5e;
+  color: white;
+}
+
+/* =============================================================
+   SECTIONS — General layout
+   ============================================================= */
+section {
+  padding: 4rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* =============================================================
+   EVENTS SECTION
+   ============================================================= */
+#eventFilter {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+#eventFilter label {
+  font-weight: 600;
+  color: #1a3c5e;
+}
+
+#categoryFilter, #searchInput {
+  padding: 0.5rem 1rem;
+  border: 2px solid #2e7d9e;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: 'Source Sans 3', sans-serif;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+#categoryFilter:focus, #searchInput:focus {
+  border-color: #e05e2b;
+}
+
+/* Exercise CSS3: Class selector .eventCard */
+#eventList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.eventCard {
+  /* Exercise CSS8: border, padding, margin for .eventCard */
+  background: #ffffff;
+  border: 1px solid #c8dde8;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 0;
+  box-shadow: 0 4px 12px rgba(26,60,94,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-top: 4px solid #2e7d9e;
+}
+
+.eventCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(26,60,94,0.15);
+}
+
+.eventCard h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.eventCard .event-meta {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.3rem;
+}
+
+.eventCard .event-fee {
+  font-weight: 700;
+  color: #e05e2b;
+  font-size: 1.05rem;
+  margin: 0.5rem 0;
+}
+
+/* =============================================================
+   GALLERY TABLE — Exercise CSS7 + HTML4
+   ============================================================= */
+
+/* Exercise CSS7: Table styling */
+#galleryTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+#galleryTable caption {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: #1a3c5e;
+  margin-bottom: 1rem;
+  caption-side: top;
+}
+
+/* CSS7: th and td with borders, padding, background */
+#galleryTable th {
+  background-color: #1a3c5e;
+  color: white;
+  padding: 0.8rem;
+  border: 1px solid #2e7d9e;
+}
+
+#galleryTable td {
+  padding: 1rem;
+  border: 1px solid #c8dde8;
+  background-color: #f8fcff;
+  vertical-align: top;
+}
+
+/* CSS7: Zebra striping using nth-child(even) */
+#galleryTable tbody tr:nth-child(even) td {
+  background-color: #e8f4f8;
+}
+
+/* Image class for gallery */
+.galleryImg {
+  border: 3px solid #2e7d9e;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 0.5rem;
+  cursor: zoom-in;
+  transition: transform 0.3s;
+  width: 180px;
+  height: 130px;
+  object-fit: cover;
+}
+
+.galleryImg:hover {
+  transform: scale(1.05);
+}
+
+/* =============================================================
+   REGISTRATION FORM — Exercise CSS (form styling) + HTML5
+   ============================================================= */
+#registrationForm {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(26,60,94,0.12);
+  max-width: 620px;
+}
+
+.formGroup {
+  margin-bottom: 1.4rem;
+}
+
+.formGroup label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #1a3c5e;
+  font-size: 0.95rem;
+}
+
+/* Exercise CSS8: outline on selected form fields */
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border: 2px solid #c8dde8;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: 'Source Sans 3', sans-serif;
+  transition: border-color 0.3s, outline 0.3s;
+  background: #fafeff;
+}
+
+/* Exercise CSS8: outline on focus (highlight selected fields) */
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  border-color: #2e7d9e;
+  outline: 3px solid rgba(46,125,158,0.25);
+}
+
+.feeInfo {
+  font-size: 0.9rem;
+  color: #e05e2b;
+  font-weight: 600;
+  margin-top: 0.3rem;
+}
+
+.errorMsg {
+  color: #d32f2f;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+  display: block;
+}
+
+.formOutput {
+  display: block;
+  background: #e8f5e9;
+  border: 1px solid #a5d6a7;
+  color: #2e7d32;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: none;
+}
+
+/* =============================================================
+   FEEDBACK SECTION
+   ============================================================= */
+.feedbackBox {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 620px;
+  box-shadow: 0 2px 12px rgba(26,60,94,0.08);
+}
+
+.feedbackBox label {
+  font-weight: 600;
+  color: #1a3c5e;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.feedbackBox textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #c8dde8;
+  border-radius: 8px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.95rem;
+  resize: vertical;
+  transition: border-color 0.3s;
+}
+
+.feedbackBox textarea:focus {
+  border-color: #2e7d9e;
+  outline: 3px solid rgba(46,125,158,0.2);
+}
+
+.charCount {
+  font-size: 0.82rem;
+  color: #888;
+  text-align: right;
+  margin: 0.3rem 0 1rem;
+}
+
+/* =============================================================
+   VIDEO SECTION
+   ============================================================= */
+.videoWrapper {
+  text-align: center;
+}
+
+.videoWrapper video {
+  border-radius: 12px;
+  max-width: 100%;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.videoStatus {
+  margin-top: 0.7rem;
+  font-style: italic;
+  color: #2e7d9e;
+  font-weight: 600;
+}
+
+/* =============================================================
+   GEOLOCATION SECTION
+   ============================================================= */
+.geoResult {
+  margin-top: 1.2rem;
+  background: #e8f4f8;
+  border-left: 4px solid #2e7d9e;
+  padding: 1rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.95rem;
+  display: none;
+}
+
+/* =============================================================
+   Exercise CSS9: MULTI-COLUMN NEWS LAYOUT
+   ============================================================= */
+.newsArticle {
+  column-count: 2;
+  column-gap: 30px;
+  column-rule: 1px solid #c8dde8;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(26,60,94,0.07);
+  /* Exercise CSS5: Typography */
+  text-align: justify;
+  line-height: 1.8;
+  font-size: 0.97rem;
+  letter-spacing: 0.2px;
+}
+
+/* =============================================================
+   ADMIN TABLE — Exercise CSS7 full implementation
+   ============================================================= */
+
+/* CSS7: border-collapse, text-align */
+#adminTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+#adminTable th {
+  background-color: #1a3c5e;
+  color: #ffffff;
+  padding: 0.9rem 1rem;
+  border: 1px solid #2e7d9e;
+  font-family: 'Source Sans 3', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+}
+
+#adminTable td {
+  padding: 0.8rem 1rem;
+  border: 1px solid #c8dde8;
+}
+
+/* CSS7: Zebra striping — nth-child(even) */
+#adminTable tbody tr:nth-child(even) {
+  background-color: #e8f4f8;
+}
+
+#adminTable tbody tr:hover {
+  background-color: #cde9f5;
+}
+
+/* Badge status styles */
+.badge {
+  padding: 0.2rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge.open { background: #e8f5e9; color: #2e7d32; }
+.badge.full { background: #fce4ec; color: #c62828; }
+.badge.past { background: #f3e5f5; color: #6a1b9a; }
+
+/* =============================================================
+   LIGHTBOX (HTML6 — ondblclick enlarge)
+   ============================================================= */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+
+#lightbox.active {
+  display: flex;
+}
+
+#lightboxImg {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 8px;
+  border: 3px solid white;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
+
+/* =============================================================
+   FOOTER
+   ============================================================= */
+#mainFooter {
+  background: #1a3c5e;
+  color: #a8cfe0;
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9rem;
+}
+
+#mainFooter a:link,
+#mainFooter a:visited {
+  color: #d0eaf5;
+  text-decoration: none;
+}
+
+#mainFooter a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* =============================================================
+   Exercise CSS1: Inline style example (in HTML via <h1 style="">)
+   Exercise CSS8: visibility: hidden vs display: none
+   ============================================================= */
+.hidden-visibility {
+  visibility: hidden; /* takes up space, but invisible */
+}
+
+.hidden-display {
+  display: none; /* removed from layout entirely */
+}
+
+/* =============================================================
+   Exercise CSS10: RESPONSIVE DESIGN — Media Queries
+   ============================================================= */
+@media (max-width: 768px) {
+
+  /* Stack navigation vertically */
+  #mainNav {
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1rem;
+  }
+
+  #mainNav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Reduce heading sizes */
+  #welcomeBanner h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Reduce image sizes */
+  .galleryImg {
+    width: 120px;
+    height: 90px;
+  }
+
+  /* Stack event cards single column */
+  #eventList {
+    grid-template-columns: 1fr;
+  }
+
+  /* Multi-column goes single on mobile */
+  .newsArticle {
+    column-count: 1;
+  }
+
+  /* Use % for flexible layout */
+  section {
+    padding: 2rem 1rem;
+    width: 100%;
+  }
+
+  #registrationForm {
+    padding: 1.5rem;
+  }
+
+  /* vw/vh example */
+  #welcomeBanner {
+    padding: 8vh 5vw;
+    clip-path: none;
+  }
+
+  video {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  #galleryTable {
+    font-size: 0.8rem;
+  }
+
+  .galleryImg {
+    width: 90px;
+    height: 70px;
+  }
+
+  .cta-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}

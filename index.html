@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<!-- Exercise 1: HTML5 Base Template -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local Community Event Portal</title>
+
+  <!-- Exercise CSS1: Link External Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Exercise CSS5: Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Exercise 7 (HTML): onbeforeunload warning -->
+  <script>
+    window.onbeforeunload = function () {
+      if (document.getElementById("registrationForm") &&
+          document.getElementById("fullName").value !== "") {
+        return "You have an unfinished registration. Are you sure you want to leave?";
+      }
+    };
+  </script>
+</head>
+
+<body onload="alert('Welcome to the Local Community Event Portal!')">
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <!-- Exercise 2 (HTML): Navigation with anchor links -->
+  <nav id="mainNav">
+    <div class="nav-brand">🏛️ CityConnect</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#register">Register</a></li>
+      <li><a href="#feedback">Feedback</a></li>
+      <li><a href="#news">News</a></li>
+      <!-- Exercise 2 (HTML): External link opens in new tab -->
+      <li><a href="help.html" target="_blank">Help</a></li>
+    </ul>
+  </nav>
+
+  <!-- ==================== HOME / WELCOME ==================== -->
+  <!-- Exercise 3 (HTML): Welcome banner with id and class -->
+  <section id="home">
+    <!-- Exercise CSS3: ID selector #welcomeBanner -->
+    <div id="welcomeBanner">
+      <h1>Welcome to the <span class="highlight">Community Event Portal</span></h1>
+      <!-- Exercise 3 (HTML): Inline style for special offer -->
+      <p>Explore local events, register online, and connect with your city.
+        <span style="color: red; font-weight: bold;">🎉 New: Free entry for first-time users!</span>
+      </p>
+      <a href="#events" class="cta-button">Browse Events</a>
+    </div>
+  </section>
+
+  <!-- ==================== EVENTS SECTION ==================== -->
+  <!-- Exercise 2 (HTML): Section with matching ID -->
+  <section id="events">
+    <h2>Upcoming Events</h2>
+
+    <!-- Exercise JS7: Event cards rendered by JavaScript -->
+    <div id="eventFilter">
+      <!-- Exercise JS8: onchange filter -->
+      <label for="categoryFilter">Filter by Category:</label>
+      <select id="categoryFilter" onchange="filterEventsByCategory(this.value)">
+        <option value="all">All</option>
+        <option value="music">Music</option>
+        <option value="workshop">Workshop</option>
+        <option value="sports">Sports</option>
+        <option value="cultural">Cultural</option>
+      </select>
+
+      <!-- Exercise JS8: keydown quick search -->
+      <input type="text" id="searchInput" placeholder="Search events..." onkeydown="quickSearch(event)" />
+    </div>
+
+    <!-- Events rendered here by main.js -->
+    <div id="eventList"></div>
+  </section>
+
+  <!-- ==================== IMAGE GALLERY ==================== -->
+  <!-- Exercise 4 (HTML): Image gallery in a table layout -->
+  <section id="gallery">
+    <h2>Past Event Highlights</h2>
+    <table id="galleryTable">
+      <caption>📸 Community Events Gallery</caption>
+      <tr>
+        <td>
+          <!-- Exercise 6 (HTML): ondblclick to enlarge -->
+          <img src="https://picsum.photos/seed/event1/200/150"
+               alt="Music Festival 2024"
+               title="Annual Music Festival"
+               class="galleryImg"
+               ondblclick="enlargeImage(this)" />
+          <p>Music Festival</p>
+        </td>
+        <td>
+          <img src="https://picsum.photos/seed/event2/200/150"
+               alt="Cooking Workshop"
+               title="Community Cooking Workshop"
+               class="galleryImg"
+               ondblclick="enlargeImage(this)" />
+          <p>Cooking Workshop</p>
+        </td>
+        <td>
+          <img src="https://picsum.photos/seed/event3/200/150"
+               alt="Sports Day"
+               title="City Sports Day"
+               class="galleryImg"
+               ondblclick="enlargeImage(this)" />
+          <p>Sports Day</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src="https://picsum.photos/seed/event4/200/150"
+               alt="Cultural Night"
+               title="Cultural Heritage Night"
+               class="galleryImg"
+               ondblclick="enlargeImage(this)" />
+          <p>Cultural Night</p>
+        </td>
+        <td>
+          <img src="https://picsum.photos/seed/event5/200/150"
+               alt="Art Exhibition"
+               title="Local Art Exhibition"
+               class="galleryImg"
+               ondblclick="enlargeImage(this)" />
+          <p>Art Exhibition</p>
+        </td>
+        <td>
+          <img src="https://picsum.photos/seed/event6/200/150"
+               alt="Food Fair"
+               title="Annual Food Fair"
+               class="galleryImg"
+               ondblclick="enlargeImage(this)" />
+          <p>Food Fair</p>
+        </td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ==================== REGISTRATION FORM ==================== -->
+  <!-- Exercise 5 (HTML): Event Registration Form -->
+  <section id="register">
+    <h2>Register for an Event</h2>
+    <form id="registrationForm" onsubmit="handleFormSubmit(event)">
+
+      <!-- Exercise JS11: Form inputs -->
+      <div class="formGroup">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="fullName"
+               placeholder="Enter your full name"
+               required autofocus />
+      </div>
+
+      <div class="formGroup">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email"
+               placeholder="yourname@email.com"
+               required />
+      </div>
+
+      <div class="formGroup">
+        <label for="eventDate">Preferred Date</label>
+        <input type="date" id="eventDate" name="eventDate" required />
+      </div>
+
+      <!-- Exercise 6 (HTML): onchange shows event fee -->
+      <div class="formGroup">
+        <label for="eventType">Event Type</label>
+        <select id="eventType" name="eventType"
+                onchange="showEventFee(this.value); savePreference(this.value)">
+          <option value="">-- Select Event --</option>
+          <option value="music">Music Concert - ₹200</option>
+          <option value="workshop">Workshop - ₹150</option>
+          <option value="sports">Sports Day - Free</option>
+          <option value="cultural">Cultural Night - ₹100</option>
+        </select>
+        <p id="feeDisplay" class="feeInfo"></p>
+      </div>
+
+      <!-- Exercise 6 (HTML): onblur phone validation -->
+      <div class="formGroup">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone"
+               placeholder="10-digit phone number"
+               onblur="validatePhone(this.value)" />
+        <span id="phoneError" class="errorMsg"></span>
+      </div>
+
+      <div class="formGroup">
+        <label for="message">Additional Message</label>
+        <textarea id="message" name="message"
+                  placeholder="Any special requirements?"
+                  rows="4"></textarea>
+      </div>
+
+      <!-- Exercise 5 (HTML): output element for confirmation -->
+      <output id="formOutput" class="formOutput"></output>
+
+      <!-- Exercise 6 (HTML): onclick confirmation -->
+      <button type="submit" id="registerBtn" class="cta-button"
+              onclick="showConfirmation()">
+        Register Now
+      </button>
+      <button type="button" class="btn-secondary" onclick="clearPreferences()">
+        Clear Preferences
+      </button>
+    </form>
+  </section>
+
+  <!-- ==================== FEEDBACK SECTION ==================== -->
+  <!-- Exercise 6 (HTML): Event feedback with event handling -->
+  <section id="feedback">
+    <h2>Event Feedback</h2>
+    <div class="feedbackBox">
+      <label for="feedbackText">Your Feedback:</label>
+      <!-- Exercise 6 (HTML): keyup to count characters -->
+      <textarea id="feedbackText"
+                placeholder="Share your thoughts about the event..."
+                rows="5"
+                onkeyup="countChars(this)"></textarea>
+      <p id="charCount" class="charCount">0 / 500 characters</p>
+      <button class="cta-button" onclick="submitFeedback()">Submit Feedback</button>
+    </div>
+  </section>
+
+  <!-- ==================== VIDEO SECTION ==================== -->
+  <!-- Exercise 7 (HTML): Video with oncanplay -->
+  <section id="video-section">
+    <h2>Event Promo Video</h2>
+    <div class="videoWrapper">
+      <video id="promoVideo"
+             controls
+             width="640"
+             oncanplay="videoReady()"
+             poster="https://picsum.photos/seed/poster/640/360">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <p id="videoStatus" class="videoStatus">⏳ Loading video...</p>
+    </div>
+  </section>
+
+  <!-- ==================== GEOLOCATION ==================== -->
+  <!-- Exercise 9 (HTML): Geolocation -->
+  <section id="geo-section">
+    <h2>Find Nearby Events</h2>
+    <button class="cta-button" onclick="findNearbyEvents()">📍 Find Nearby Events</button>
+    <div id="geoResult" class="geoResult"></div>
+  </section>
+
+  <!-- ==================== NEWS / MULTI-COLUMN ==================== -->
+  <!-- Exercise CSS9: Multi-column layout -->
+  <section id="news">
+    <h2>Community Bulletin</h2>
+    <article class="newsArticle">
+      <p>The city council has announced a series of exciting community events for the upcoming season.
+         Residents are encouraged to participate in various activities ranging from cultural performances
+         to sporting events.</p>
+      <p>The annual Music Festival will be held at Central Park this year, featuring over 20 local and
+         regional artists. Entry is free for children under 12 and senior citizens.</p>
+      <p>A new cooking workshop series has been introduced for homemakers and young adults interested
+         in learning traditional and modern cuisines from local chefs.</p>
+      <p>Sports enthusiasts can look forward to the City Sports Day, which includes track events,
+         team sports, and fun activities for all age groups.</p>
+      <p>Cultural Heritage Night returns with folk dances, art installations, and traditional food
+         stalls showcasing the diverse culture of our city's communities.</p>
+      <p>Registration for all events is now open through this portal. Seats are limited, so early
+         registration is strongly recommended for popular events.</p>
+    </article>
+  </section>
+
+  <!-- ==================== ADMIN TABLE ==================== -->
+  <!-- Exercise CSS7: Styled table with zebra striping -->
+  <section id="admin-table">
+    <h2>Events Admin Panel</h2>
+    <table id="adminTable">
+      <thead>
+        <tr>
+          <th>Event Name</th>
+          <th>Date</th>
+          <th>Category</th>
+          <th>Seats</th>
+          <th>Fee</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Music Concert</td>
+          <td>2025-07-15</td>
+          <td>Music</td>
+          <td>200</td>
+          <td>₹200</td>
+          <td><span class="badge open">Open</span></td>
+        </tr>
+        <tr>
+          <td>Baking Workshop</td>
+          <td>2025-07-20</td>
+          <td>Workshop</td>
+          <td>30</td>
+          <td>₹150</td>
+          <td><span class="badge open">Open</span></td>
+        </tr>
+        <tr>
+          <td>City Sports Day</td>
+          <td>2025-08-01</td>
+          <td>Sports</td>
+          <td>500</td>
+          <td>Free</td>
+          <td><span class="badge open">Open</span></td>
+        </tr>
+        <tr>
+          <td>Cultural Night</td>
+          <td>2025-08-10</td>
+          <td>Cultural</td>
+          <td>0</td>
+          <td>₹100</td>
+          <td><span class="badge full">Full</span></td>
+        </tr>
+        <tr>
+          <td>Art Exhibition</td>
+          <td>2025-06-01</td>
+          <td>Cultural</td>
+          <td>100</td>
+          <td>Free</td>
+          <td><span class="badge past">Past</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <!-- Exercise 1 (HTML): Footer section -->
+  <footer id="mainFooter">
+    <p>© 2025 CityConnect Community Portal &nbsp;|&nbsp;
+       <a href="help.html" target="_blank">Help & Support</a> &nbsp;|&nbsp;
+       <a href="#home">Back to Top ↑</a>
+    </p>
+  </footer>
+
+  <!-- Image Lightbox Overlay (Exercise 6 HTML - ondblclick) -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <img id="lightboxImg" src="" alt="Enlarged Event Image" />
+  </div>
+
+  <!-- Exercise JS: Link main JavaScript file -->
+  <script src="main.js"></script>
+
+  <!-- Exercise JS14: jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="jquery-effects.js"></script>
+</body>
+</html>
