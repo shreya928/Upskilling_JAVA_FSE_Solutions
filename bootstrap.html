@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduTrack — Student Portal</title>
+
+  <!-- Ex 1.1: Bootstrap 5 via CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Ex 17.1: Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --accent: #2563eb;
+      --accent-light: #eff6ff;
+      --sidebar-bg: #0f172a;
+      --sidebar-text: #94a3b8;
+      --sidebar-active: #2563eb;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: #f8fafc; }
+    h1,h2,h3,h4,h5 { font-family: 'Fraunces', serif; }
+
+    /* ── Sidebar (Ex 14.2 — visible tablet+) ── */
+    #sidebar {
+      width: 230px; min-height: 100vh;
+      background: var(--sidebar-bg);
+      position: fixed; top: 0; left: 0; z-index: 1040;
+      transition: transform .3s;
+    }
+    #sidebar .brand { padding: 1.4rem 1.25rem; border-bottom: 1px solid #1e293b; }
+    #sidebar .nav-link {
+      color: var(--sidebar-text); padding: .6rem 1.25rem;
+      border-radius: .4rem; margin: .1rem .5rem; font-size: .9rem;
+    }
+    #sidebar .nav-link:hover, #sidebar .nav-link.active {
+      background: var(--accent); color: #fff;
+    }
+    #sidebar .nav-link i { margin-right: .5rem; }
+    @media (max-width: 767px) {
+      #sidebar { transform: translateX(-100%); }
+      #sidebar.show { transform: translateX(0); }
+      #main-content { margin-left: 0 !important; }
+    }
+
+    #main-content { margin-left: 230px; }
+
+    /* Section spacing */
+    .portal-section { padding: 2.5rem 0; }
+    .section-label {
+      font-size: .7rem; letter-spacing: .12em;
+      text-transform: uppercase; color: #64748b; margin-bottom: .2rem;
+    }
+    .section-heading {
+      font-size: 1.4rem; font-weight: 700;
+      border-left: 4px solid var(--accent); padding-left: .75rem; margin-bottom: 1.5rem;
+    }
+
+    /* Stat cards */
+    .stat-card { border: none; border-radius: .75rem; }
+
+    /* Hero */
+    #hero { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); }
+
+    /* Timeline dot */
+    .timeline-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0; margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     SIDEBAR  (Ex 14.2 — responsive sidebar)
+     Uses: position-fixed, d-flex, flex-column,
+           d-none d-md-block equivalent via CSS
+══════════════════════════════════════════════ -->
+<nav id="sidebar" class="d-flex flex-column">
+  <div class="brand">
+    <span class="text-white fw-bold fs-5">
+      <i class="bi bi-mortarboard-fill text-primary me-2"></i>EduTrack
+    </span>
+  </div>
+  <ul class="nav flex-column mt-2 flex-grow-1">
+    <li class="nav-item"><a href="#hero"       class="nav-link active"><i class="bi bi-house-door"></i>Dashboard</a></li>
+    <li class="nav-item"><a href="#courses"    class="nav-link"><i class="bi bi-journal-bookmark"></i>Courses</a></li>
+    <li class="nav-item"><a href="#attendance" class="nav-link"><i class="bi bi-calendar-check"></i>Attendance</a></li>
+    <li class="nav-item"><a href="#register"   class="nav-link"><i class="bi bi-person-plus"></i>Register</a></li>
+    <li class="nav-item"><a href="#notice"     class="nav-link"><i class="bi bi-megaphone"></i>Notice Board</a></li>
+    <li class="nav-item"><a href="#faq"        class="nav-link"><i class="bi bi-question-circle"></i>FAQ</a></li>
+  </ul>
+  <!-- Footer icons in sidebar (Ex 17.1) -->
+  <div class="p-3 border-top border-secondary">
+    <small class="text-secondary d-block mb-2">Connect</small>
+    <a href="#" class="text-secondary me-2 fs-5"><i class="bi bi-github"></i></a>
+    <a href="#" class="text-secondary me-2 fs-5"><i class="bi bi-linkedin"></i></a>
+    <a href="#" class="text-secondary fs-5"><i class="bi bi-twitter-x"></i></a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+     TOPBAR  (Ex 10.1 — responsive navbar)
+     Uses: navbar, navbar-expand-md, d-flex,
+           justify-content-between, align-items-center
+══════════════════════════════════════════════ -->
+<div id="main-content">
+<nav class="navbar navbar-light bg-white border-bottom px-3 sticky-top">
+  <button class="btn btn-sm btn-outline-secondary d-md-none" id="sidebarToggle">
+    <i class="bi bi-list fs-5"></i>
+  </button>
+  <span class="navbar-brand ms-2 d-md-none fw-bold">EduTrack</span>
+  <div class="d-flex align-items-center justify-content-between w-100 d-none d-md-flex">
+    <form class="d-flex">
+      <div class="input-group input-group-sm">
+        <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+        <input type="search" class="form-control border-start-0 bg-light" placeholder="Search courses, notices…"/>
+      </div>
+    </form>
+    <div class="d-flex align-items-center gap-3">
+      <button class="btn btn-sm position-relative btn-outline-secondary">
+        <i class="bi bi-bell"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:.6rem">3</span>
+      </button>
+      <span class="fw-semibold small">Shreya Pathak</span>
+      <img src="https://placehold.co/34x34/2563eb/fff?text=RS" class="rounded-circle border border-primary" alt="avatar"/>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+     HERO / DASHBOARD  (Ex 13.2 bg-gradient)
+     Uses: bg-dark bg-gradient, text-white,
+           container, row, col-*, display-* typography
+══════════════════════════════════════════════ -->
+<section id="hero" class="bg-dark bg-gradient text-white py-5">
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <div class="col-md-8">
+        <p class="section-label text-info">Good morning 👋</p>
+        <h1 class="display-4 fw-bold mb-2">Welcome back, Shreya</h1>
+        <p class="lead opacity-75 mb-4">B.Tech Computer Science · Semester 5 · Roll No. 21CS042</p>
+        <!-- Ex 9 contextual + outline buttons -->
+        <div class="d-flex flex-wrap gap-2">
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profileModal">
+            <i class="bi bi-person-circle me-1"></i>View Profile
+          </button>
+          <button class="btn btn-outline-light">
+            <i class="bi bi-download me-1"></i>Download ID Card
+          </button>
+        </div>
+      </div>
+      <!-- Stats: col-md-4 -->
+      <div class="col-md-4">
+        <div class="row g-2">
+          <div class="col-6">
+            <div class="stat-card card bg-primary bg-opacity-25 text-white p-3 text-center">
+              <div class="fs-2 fw-bold">82%</div>
+              <div class="small opacity-75">Attendance</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="stat-card card bg-success bg-opacity-25 text-white p-3 text-center">
+              <div class="fs-2 fw-bold">7.9</div>
+              <div class="small opacity-75">CGPA</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="stat-card card bg-warning bg-opacity-25 text-white p-3 text-center">
+              <div class="fs-2 fw-bold">6</div>
+              <div class="small opacity-75">Subjects</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="stat-card card bg-info bg-opacity-25 text-white p-3 text-center">
+              <div class="fs-2 fw-bold">2</div>
+              <div class="small opacity-75">Pending</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     COURSES  (Ex 11 — Cards, Ex 15 — Shadows/Borders)
+     Uses: card, card-img-top, card-body, card-title,
+           shadow, rounded, border-*, col-md-4
+══════════════════════════════════════════════ -->
+<section id="courses" class="portal-section">
+  <div class="container">
+    <p class="section-label">My Subjects</p>
+    <h2 class="section-heading">Enrolled Courses</h2>
+
+    <!-- Nav Tabs for course filter (Ex 10.2) -->
+    <ul class="nav nav-tabs mb-4">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#all">All</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#core">Core</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#elective">Elective</button></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="all">
+        <!-- 3-column responsive grid: stack → 2/row → 3/row (Ex 3.1) -->
+        <div class="row g-4">
+          <!-- Course card -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 rounded-3">
+              <div class="card-img-top bg-primary d-flex align-items-center justify-content-center" style="height:90px;">
+                <i class="bi bi-cpu fs-1 text-white"></i>
+              </div>
+              <div class="card-body">
+                <span class="badge bg-primary mb-2">Core</span>
+                <h5 class="card-title">Data Structures</h5>
+                <p class="card-text text-muted small">Prof. A. Kumar · 4 Credits</p>
+                <div class="progress" style="height:6px;">
+                  <div class="progress-bar bg-primary" style="width:72%"></div>
+                </div>
+                <small class="text-muted">72% complete</small>
+              </div>
+              <div class="card-footer bg-white border-0 d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">Materials</button>
+                <!-- Ex 17.2 icon-only button -->
+                <button class="btn btn-sm btn-outline-secondary" title="Bookmark"><i class="bi bi-bookmark"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 rounded-3">
+              <div class="card-img-top bg-success d-flex align-items-center justify-content-center" style="height:90px;">
+                <i class="bi bi-graph-up fs-1 text-white"></i>
+              </div>
+              <div class="card-body">
+                <span class="badge bg-success mb-2">Core</span>
+                <h5 class="card-title">Operating Systems</h5>
+                <p class="card-text text-muted small">Prof. S. Mehta · 4 Credits</p>
+                <div class="progress" style="height:6px;">
+                  <div class="progress-bar bg-success" style="width:55%"></div>
+                </div>
+                <small class="text-muted">55% complete</small>
+              </div>
+              <div class="card-footer bg-white border-0 d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-success">Materials</button>
+                <button class="btn btn-sm btn-outline-secondary" title="Bookmark"><i class="bi bi-bookmark"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 rounded-3">
+              <div class="card-img-top bg-warning d-flex align-items-center justify-content-center" style="height:90px;">
+                <i class="bi bi-database fs-1 text-white"></i>
+              </div>
+              <div class="card-body">
+                <span class="badge bg-warning text-dark mb-2">Elective</span>
+                <h5 class="card-title">DBMS</h5>
+                <p class="card-text text-muted small">Prof. R. Patel · 3 Credits</p>
+                <div class="progress" style="height:6px;">
+                  <div class="progress-bar bg-warning" style="width:88%"></div>
+                </div>
+                <small class="text-muted">88% complete</small>
+              </div>
+              <div class="card-footer bg-white border-0 d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-warning">Materials</button>
+                <button class="btn btn-sm btn-outline-secondary" title="Bookmark"><i class="bi bi-bookmark-fill text-warning"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="core"><p class="text-muted py-3">Showing Core subjects only.</p></div>
+      <div class="tab-pane fade" id="elective"><p class="text-muted py-3">Showing Elective subjects only.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     ATTENDANCE  (Ex 12 — Spacing, Ex 13 — Colors)
+     Uses: bg-success/danger/warning, m-*, p-*,
+           d-flex, justify-content-between
+══════════════════════════════════════════════ -->
+<section id="attendance" class="portal-section bg-light">
+  <div class="container">
+    <p class="section-label">Your Record</p>
+    <h2 class="section-heading">Attendance</h2>
+
+    <!-- 4-col equal layout (Ex 4.2) -->
+    <div class="row g-3 mb-4">
+      <div class="col-sm-3">
+        <div class="card text-center border-0 shadow-sm p-3">
+          <div class="fs-3 fw-bold text-success">82%</div>
+          <div class="small text-muted mt-1">Data Structures</div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card text-center border-0 shadow-sm p-3">
+          <div class="fs-3 fw-bold text-warning">74%</div>
+          <div class="small text-muted mt-1">OS</div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card text-center border-0 shadow-sm p-3">
+          <div class="fs-3 fw-bold text-success">91%</div>
+          <div class="small text-muted mt-1">DBMS</div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card text-center border-0 shadow-sm p-3">
+          <div class="fs-3 fw-bold text-danger">68%</div>
+          <div class="small text-muted mt-1">Networks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline of recent classes (media-object style, Ex 11.2) -->
+    <h6 class="fw-semibold mb-3">Recent Activity</h6>
+    <div class="d-flex flex-column gap-3">
+      <div class="d-flex gap-3 align-items-start">
+        <div class="timeline-dot mt-1"></div>
+        <div class="flex-grow-1 d-flex justify-content-between align-items-center bg-white rounded p-3 shadow-sm">
+          <div>
+            <div class="fw-semibold small">Data Structures — Lecture 18</div>
+            <div class="text-muted" style="font-size:.8rem">Today, 9:00 AM</div>
+          </div>
+          <span class="badge bg-success">Present</span>
+        </div>
+      </div>
+      <div class="d-flex gap-3 align-items-start">
+        <div class="timeline-dot mt-1" style="background:#ef4444"></div>
+        <div class="flex-grow-1 d-flex justify-content-between align-items-center bg-white rounded p-3 shadow-sm">
+          <div>
+            <div class="fw-semibold small">Networks — Lecture 12</div>
+            <div class="text-muted" style="font-size:.8rem">Yesterday, 11:00 AM</div>
+          </div>
+          <span class="badge bg-danger">Absent</span>
+        </div>
+      </div>
+      <div class="d-flex gap-3 align-items-start">
+        <div class="timeline-dot mt-1" style="background:#f59e0b"></div>
+        <div class="flex-grow-1 d-flex justify-content-between align-items-center bg-white rounded p-3 shadow-sm">
+          <div>
+            <div class="fw-semibold small">OS — Lecture 20</div>
+            <div class="text-muted" style="font-size:.8rem">Mon, 2:00 PM</div>
+          </div>
+          <span class="badge bg-warning text-dark">Late</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     REGISTRATION FORM  (Ex 8 — Forms)
+     Uses: form-control, input-group, form-check,
+           form-floating, form-label, col-md-6
+══════════════════════════════════════════════ -->
+<section id="register" class="portal-section">
+  <div class="container">
+    <p class="section-label">Enrolment</p>
+    <h2 class="section-heading">Course Registration</h2>
+
+    <div class="row g-4">
+      <!-- Registration form -->
+      <div class="col-md-7">
+        <div class="card border-0 shadow-sm p-4">
+          <h6 class="fw-semibold mb-3">Add a New Course</h6>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Student Name</label>
+              <input type="text" class="form-control" value="Shreya Pathak" readonly/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Roll Number</label>
+              <input type="text" class="form-control" value="21CS042" readonly/>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Course Name</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-book"></i></span>
+                <input type="text" class="form-control" placeholder="e.g. Machine Learning"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Semester</label>
+              <select class="form-control">
+                <option>Semester 5</option>
+                <option>Semester 6</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Credits</label>
+              <input type="number" class="form-control" placeholder="3"/>
+            </div>
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="confirmCheck"/>
+                <label class="form-check-label" for="confirmCheck">I confirm this registration is correct</label>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary mt-3 px-4">
+            <i class="bi bi-plus-circle me-1"></i>Register Course
+          </button>
+        </div>
+      </div>
+
+      <!-- Login / sign-in with form-floating (Ex 8.2) -->
+      <div class="col-md-5">
+        <div class="card border-0 shadow-sm p-4">
+          <h6 class="fw-semibold mb-3">Student Login</h6>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="femail" placeholder="email"/>
+            <label for="femail">Email address</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="fpwd" placeholder="password"/>
+            <label for="fpwd">Password</label>
+          </div>
+          <!-- Toggle button group: remember me (Ex 9.2) -->
+          <div class="btn-group w-100 mb-3">
+            <input type="checkbox" class="btn-check" id="rememberMe" autocomplete="off"/>
+            <label class="btn btn-outline-secondary btn-sm w-100" for="rememberMe">
+              <i class="bi bi-lock me-1"></i>Remember Me
+            </label>
+          </div>
+          <button class="btn btn-dark w-100">Sign In</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     NOTICE BOARD  (Ex 7 Typography, Ex 15 Borders/Shadows)
+     Uses: display-*, lead, text-muted, fw-bold,
+           text-uppercase, shadow, rounded-pill, border-*
+══════════════════════════════════════════════ -->
+<section id="notice" class="portal-section bg-light">
+  <div class="container">
+    <p class="section-label">Announcements</p>
+    <h2 class="section-heading">Notice Board</h2>
+
+    <!-- Typography demo naturally inside notices -->
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="card border-0 shadow-sm border-start border-danger border-4 rounded-3 p-4">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <!-- text-uppercase -->
+              <span class="text-uppercase text-danger fw-bold" style="font-size:.72rem; letter-spacing:.1em">Urgent</span>
+              <!-- display heading -->
+              <h4 class="mt-1 mb-1">Mid-Semester Examination Schedule Released</h4>
+              <!-- lead + text-muted -->
+              <p class="lead mb-1" style="font-size:1rem">Exams begin 10 June 2025. Hall tickets available on portal.</p>
+              <p class="text-muted small">Posted by: Exam Cell · 28 May 2025</p>
+            </div>
+            <!-- rounded-pill badge (Ex 15) -->
+            <span class="badge bg-danger rounded-pill">New</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-4 h-100">
+          <span class="text-uppercase text-primary fw-bold" style="font-size:.72rem;">Academic</span>
+          <h5 class="mt-1">Project Submission Deadline Extended</h5>
+          <p class="text-muted small mb-0">New deadline: 5 June 2025. Submit via LMS portal only.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-4 h-100">
+          <span class="text-uppercase text-success fw-bold" style="font-size:.72rem;">Event</span>
+          <h5 class="mt-1">Tech Fest 2025 Registrations Open</h5>
+          <p class="text-muted small mb-0">Register before 1 June. Teams of 2–4 students.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Display + text-capitalize demo row -->
+    <div class="mt-4 p-4 bg-dark bg-gradient text-white rounded-3 text-center">
+      <p class="display-6 fw-bold mb-1">Semester 5 Results</p>
+      <p class="lead opacity-75 mb-3">text-capitalize · text-lowercase · fw-light demo:</p>
+      <p class="text-capitalize mb-0">result declared for all branches</p>
+      <p class="text-lowercase mb-0">CGPA ABOVE 8.0 ELIGIBLE FOR HONOURS</p>
+      <p class="fw-light fst-italic opacity-75 small mt-2">All results are provisional — subject to verification.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FACULTY  (Ex 16 — Positioning, Ex 15 Borders)
+     Uses: position-relative, position-absolute,
+           translate-middle, rounded-circle, border-*
+══════════════════════════════════════════════ -->
+<section class="portal-section">
+  <div class="container">
+    <p class="section-label">Your Teachers</p>
+    <h2 class="section-heading">Faculty</h2>
+    <div class="row g-4">
+      <div class="col-6 col-md-3" >
+        <div class="text-center">
+          <!-- position-relative + position-absolute badge over image (Ex 16.2) -->
+          <div class="position-relative d-inline-block">
+            <img src="https://placehold.co/80x80/0d6efd/fff?text=AK" class="rounded-circle border border-3 border-primary shadow" alt="faculty"/>
+            <span class="position-absolute bottom-0 end-0 badge bg-success rounded-circle p-1">
+              <i class="bi bi-check" style="font-size:.6rem"></i>
+            </span>
+          </div>
+          <div class="mt-2 fw-semibold small">Prof. A. Kumar</div>
+          <div class="text-muted" style="font-size:.78rem">Data Structures</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="text-center">
+          <div class="position-relative d-inline-block">
+            <img src="https://placehold.co/80x80/198754/fff?text=SM" class="rounded-circle border border-3 border-success shadow" alt="faculty"/>
+            <span class="position-absolute bottom-0 end-0 badge bg-success rounded-circle p-1">
+              <i class="bi bi-check" style="font-size:.6rem"></i>
+            </span>
+          </div>
+          <div class="mt-2 fw-semibold small">Prof. S. Mehta</div>
+          <div class="text-muted" style="font-size:.78rem">Operating Systems</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="text-center">
+          <div class="position-relative d-inline-block">
+            <img src="https://placehold.co/80x80/dc3545/fff?text=RP" class="rounded-circle border border-3 border-warning shadow" alt="faculty"/>
+            <span class="position-absolute bottom-0 end-0 badge bg-secondary rounded-circle p-1">
+              <i class="bi bi-dash" style="font-size:.6rem"></i>
+            </span>
+          </div>
+          <div class="mt-2 fw-semibold small">Prof. R. Patel</div>
+          <div class="text-muted" style="font-size:.78rem">DBMS</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="text-center">
+          <div class="position-relative d-inline-block">
+            <img src="https://placehold.co/80x80/6c757d/fff?text=NV" class="rounded-circle border border-3 border-secondary shadow" alt="faculty"/>
+            <span class="position-absolute bottom-0 end-0 badge bg-success rounded-circle p-1">
+              <i class="bi bi-check" style="font-size:.6rem"></i>
+            </span>
+          </div>
+          <div class="mt-2 fw-semibold small">Prof. N. Verma</div>
+          <div class="text-muted" style="font-size:.78rem">Networks</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FAQ — ACCORDION  (Ex 18.2)
+     Uses: accordion, accordion-button, collapse,
+           data-bs-toggle, data-bs-parent
+══════════════════════════════════════════════ -->
+<section id="faq" class="portal-section bg-light">
+  <div class="container">
+    <p class="section-label">Help</p>
+    <h2 class="section-heading">FAQ</h2>
+    <div class="accordion" id="faqAcc">
+      <div class="accordion-item border-0 mb-2 rounded-3 shadow-sm overflow-hidden">
+        <h2 class="accordion-header">
+          <button class="accordion-button fw-semibold" data-bs-toggle="collapse" data-bs-target="#f1">
+            How is attendance calculated?
+          </button>
+        </h2>
+        <div id="f1" class="accordion-collapse collapse show" data-bs-parent="#faqAcc">
+          <div class="accordion-body text-muted">Attendance is calculated as (classes attended ÷ total classes held) × 100. Minimum 75% is required.</div>
+        </div>
+      </div>
+      <div class="accordion-item border-0 mb-2 rounded-3 shadow-sm overflow-hidden">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-semibold" data-bs-toggle="collapse" data-bs-target="#f2">
+            How to apply for leave?
+          </button>
+        </h2>
+        <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+          <div class="accordion-body text-muted">Submit a leave application through the portal under "My Requests" at least 2 days in advance.</div>
+        </div>
+      </div>
+      <div class="accordion-item border-0 mb-2 rounded-3 shadow-sm overflow-hidden">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-semibold" data-bs-toggle="collapse" data-bs-target="#f3">
+            When are results published?
+          </button>
+        </h2>
+        <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+          <div class="accordion-body text-muted">Results are typically published within 4 weeks after the last exam. Check the Notice Board for updates.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SASS CUSTOMIZATION NOTE  (Ex 19)
+══════════════════════════════════════════════ -->
+<section class="portal-section">
+  <div class="container">
+    <p class="section-label">Exercise 19</p>
+    <h2 class="section-heading">Sass Customization</h2>
+    <div class="alert alert-info border-0 shadow-sm">
+      <h6 class="fw-bold"><i class="bi bi-palette me-1"></i>How this portal's theme would be customized via Sass</h6>
+      <p class="small mb-2">In a real npm-based project, create <code>custom.scss</code>:</p>
+      <pre class="bg-dark text-white rounded p-3 small mb-0">// Override Bootstrap variables BEFORE importing
+$primary:       #2563eb;   // our blue accent
+$border-radius: 0.75rem;   // rounded cards
+$font-family-base: 'DM Sans', sans-serif;
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+</pre>
+      <p class="small mt-2 mb-0">Compile: <code>npx sass custom.scss dist/portal.css</code></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FOOTER  (Ex 16.1 position-fixed ref, Ex 17.1 icons)
+══════════════════════════════════════════════ -->
+<footer class="bg-dark text-white py-4 mt-2">
+  <div class="container">
+    <div class="row align-items-center g-3">
+      <div class="col-md-5">
+        <div class="fw-bold fs-5 mb-1"><i class="bi bi-mortarboard-fill text-primary me-2"></i>EduTrack Portal</div>
+        <div class="text-secondary small">All 19 Bootstrap 5 Exercises · Single Page App</div>
+      </div>
+      <div class="col-md-4">
+        <!-- Nav Pills inside footer (Ex 10.2) -->
+        <ul class="nav nav-pills gap-1">
+          <li class="nav-item"><a class="nav-link py-1 px-2 text-secondary small" href="#courses">Courses</a></li>
+          <li class="nav-item"><a class="nav-link py-1 px-2 text-secondary small" href="#register">Register</a></li>
+          <li class="nav-item"><a class="nav-link py-1 px-2 text-secondary small" href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3 text-md-end">
+        <a href="#" class="text-secondary me-3 fs-5"><i class="bi bi-github"></i></a>
+        <a href="#" class="text-secondary me-3 fs-5"><i class="bi bi-linkedin"></i></a>
+        <a href="#" class="text-secondary fs-5"><i class="bi bi-envelope"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /main-content -->
+
+<!-- ══════════════════════════════════════════════
+     PROFILE MODAL  (Ex 18.1)
+     Uses: modal, modal-dialog, data-bs-toggle,
+           data-bs-dismiss
+══════════════════════════════════════════════ -->
+<div class="modal fade" id="profileModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header bg-dark text-white border-0">
+        <h5 class="modal-title"><i class="bi bi-person-badge me-2"></i>Student Profile</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <!-- media-object inside modal -->
+        <div class="d-flex gap-3 align-items-center mb-4">
+          <img src="https://placehold.co/70x70/2563eb/fff?text=RS" class="rounded-circle border border-3 border-primary shadow" alt="student"/>
+          <div>
+            <h5 class="mb-0">Shreya Pathak</h5>
+            <div class="text-muted small">B.Tech CSE · Sem 5 · Roll 21CS042</div>
+          </div>
+        </div>
+        <div class="row g-2 text-center">
+          <div class="col-4"><div class="bg-primary bg-opacity-10 rounded p-2"><div class="fw-bold text-primary">9.3</div><div class="small text-muted">CGPA</div></div></div>
+          <div class="col-4"><div class="bg-success bg-opacity-10 rounded p-2"><div class="fw-bold text-success">82%</div><div class="small text-muted">Attendance</div></div></div>
+          <div class="col-4"><div class="bg-warning bg-opacity-10 rounded p-2"><div class="fw-bold text-warning">6</div><div class="small text-muted">Subjects</div></div></div>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-primary btn-sm"><i class="bi bi-pencil me-1"></i>Edit Profile</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ex 2.2: Bootstrap JS bundle via CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Sidebar toggle for mobile
+  document.getElementById('sidebarToggle').addEventListener('click', function() {
+    document.getElementById('sidebar').classList.toggle('show');
+  });
+</script>
+</body>
+</html>
